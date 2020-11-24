@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Form, Button, Container, Alert } from 'react-bootstrap';
 
 class Login extends Component {
     constructor(props) {
@@ -6,11 +7,13 @@ class Login extends Component {
         this.state = {
             username: "",
             password: "",
-            message: ""
+            message: "",
+            showMessage: false
         }
 
         this._handleChange = this._handleChange.bind(this);
         this._handlesubmit = this._handlesubmit.bind(this);
+        this._closeMessage = this._closeMessage.bind(this);
     }
     _handleChange(e) {
         let target = e.target;
@@ -29,18 +32,38 @@ class Login extends Component {
             message = 'login failed';
         }
 
-        this.setState({ message: message });
+        this.setState({ message: message, showMessage: true });
+
         e.preventDefault();
+    }
+    _closeMessage() {
+        this.setState({ showMessage: false });
     }
     render() {
         return (
             <div>
-                <form onSubmit={this._handlesubmit} >
-                    <input type="text" name="username" value={this.state.username} onChange={this._handleChange} /><br />
-                    <input type="password" name="password" value={this.state.password} onChange={this._handleChange} /><br />
-                    <input type="submit" value="Login" />
-                </form>
-                <h3> {this.state.message} </h3>
+                <Container>
+                    <Form onSubmit={this._handlesubmit} >
+                        <Form.Group>
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control type="text" name="username" value={this.state.username} onChange={this._handleChange} />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control type="password" name="password" value={this.state.password} onChange={this._handleChange} />
+                        </Form.Group>
+                        <Button variant="primary" type="submit"> Login</Button>
+                    </Form>
+                    <Alert variant="info" show={this.state.showMessage} >
+                        {this.state.message}
+                        <div className="d-flex justify-content-end">
+                            <Button variant="info" onClick={this._closeMessage} >
+                                Thanks, please close
+                            </Button>
+                        </div>
+                    </Alert>
+                </Container>
+
             </div>
         );
     }
