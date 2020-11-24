@@ -5,15 +5,6 @@ class Header extends Component {
     constructor(props) {
         super(props);
     }
-    componentWillMount() {
-        console.log("Component will mount");
-    }
-    componentDidMount() {
-        console.log("component did mount")
-    }
-    componentWillUnmount() {
-        console.log("component will unmount");
-    }
 
     render() {
         return (
